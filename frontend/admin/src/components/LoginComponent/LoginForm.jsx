@@ -10,31 +10,28 @@ const LoginForm = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
   const handleAlertAndRedirect = () => {
-    <p className="success-message">Successful</p>
     alert("Login successful!");
-    window.location.href = "http://localhost:5173/add";  // Redirect to Google after the alert
+    window.location.href = "http://localhost:5173/add";
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
 
     try {
-      // Send a POST request to the backend login endpoint
       const response = await axios.post("http://localhost:4000/api/admin/login", formData);
-      
-      // Check if login was successful based on the server's response
+
       if (response.status === 200 && response.data.success) {
-        {handleAlertAndRedirect()} 
-        
+        // Store token if needed
+        localStorage.setItem("token", response.data.token);
+        handleAlertAndRedirect();
         console.log("Token:", response.data.token);
-        // Redirect or save the token here if necessary
       } else {
-        // Handle cases where success is false but no error was thrown
         setError(response.data.message || "Invalid credentials. Please try again.");
       }
     } catch (err) {
-      // Capture and display error messages from the server
       setError(err.response?.data?.message || "An error occurred. Please try again.");
     }
   };
