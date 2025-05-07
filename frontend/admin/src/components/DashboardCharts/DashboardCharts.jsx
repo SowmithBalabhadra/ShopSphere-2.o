@@ -5,6 +5,7 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, LineChart, Line, ResponsiveContainer
 } from 'recharts';
 import './DashboardCharts.css';
+//This component is responsible for rendering the dashboard charts using Recharts library. It fetches data from the backend and displays it in various chart formats.
 
 const DashboardCharts = () => {
   const [totalUsers, setTotalUsers] = useState(0);
